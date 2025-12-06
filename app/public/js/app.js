@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializePipeline();
     initializeSmoothScroll();
     initializeScrollAnimations();
+    initializeMobileMenu();
 });
 
 // ========================================
@@ -182,6 +183,39 @@ async function checkHealth() {
 checkHealth();
 
 // ========================================
+// Mobile Menu Toggle
+// ========================================
+function initializeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    if (mobileMenuBtn && navLinks) {
+        // Toggle menu on button click
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenuBtn.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+}
+
+// ========================================
 // Console Branding
 // ========================================
 console.log('%c🚀 AWS DevOps CI/CD Pipeline', 'color: #667eea; font-size: 24px; font-weight: bold; padding: 10px;');
@@ -189,3 +223,4 @@ console.log('%cProduction-ready infrastructure built with AWS & Terraform', 'col
 console.log('%c━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'color: #667eea;');
 console.log('%cGitHub: https://github.com/Amitabh-DevOps/aws-devops', 'color: #667eea; font-size: 12px;');
 console.log('%cAuthor: Amitabh', 'color: #a0aec0; font-size: 12px;');
+
